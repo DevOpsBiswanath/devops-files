@@ -1,0 +1,39 @@
+  1  sudo apt install apache2
+    2  yum install apache2
+    3  sytemctl status apache2
+    4  systemctl status apache2
+    5  systemctl status
+    6  ls /var/www/html
+    7  cd /var/www/html/
+    8  fdisk -l
+    9  df -h
+   10  fdisk /dev/xvdf
+   11  fdisk -l
+   12  mkfs.ext4 /dev/xvdf
+   13  ls
+   14  cd /var/www/html/
+   15  ls images/
+   16  cd ..
+   17  ls
+   18  cd ..
+   19  ls
+   20  cd  home
+   21  ls
+   22  cd ..
+   23  cd /var/www/html/
+   24  mkdir /tmp/img-backups
+   25  mv images/* /tmp/img-backups
+   26  ls
+   27  mount /dev/xvdf /var/www/html/
+   28  ls
+   29  mkdir images
+   30  ls
+   31  mount /dev/xvdf /var/www/html/images
+   32  mount /dev/xvdf1 /var/www/html/images
+   33  mount /dev/xvdf1 /var/www/html
+   34  mount /dev/xvdf /var/www/html
+   35  df -h
+   36  unmount /var/www/html
+   37  umount /var/www/html
+   38  df -h
+   39  history
