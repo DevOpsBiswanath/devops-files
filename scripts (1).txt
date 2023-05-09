@@ -1,0 +1,821 @@
+
+-----------example1.sh-----------------------------------------------
+#!/bin/bash
+
+echo "hi this is xyz and I am from blore"
+echo "present working dir is :"
+pwd
+--------------------------------------------------------
+---------------------------------------example2.sh---------------------------------
+#!/bin/bash
+
+var1="xyz"
+var2="blore-560066"
+
+echo "this is $var1 and I am from $var2"
+---------------------------------------------------------------------------------------------------
+#!/bin/bash
+
+var1="xyz"
+var2="blore-560066"
+name="abc"
+
+
+echo "this is $var1 and I am from $var2"
+
+echo "present working dir : `pwd`"
+ls -lrt
+=-----------------------------------------------------------------------------------------------
+
+-----------------------------example3.sh---------------------------------------------------
+#!/bin/bash
+
+echo "this is $1 and I am from $2"
+
+echo "$3 is pincode"
+------------------------------------------------------------------------------
+./example3.sh abc mysore 560066
+./example3.sh xyz blore 560078
+----------------------------------------------------------
+command line arguements 
+$1 ---> 1st arguemnet passed to script
+$2---> 2nd arguement 
+$3---> 3rd arguement
+.
+.
+.
+${10} ---> 10th arguemnet
+-------------------------------------------------------------
+$0 --> name of the script itself
+
+$# ---> total number of agrs passed to script
+
+$* ---> all the agrs passed to script
+
+$? --> status of last executed, 0 if success and non zero if failure (exit status)
+
+$$ ---->  pid of current running process 
+
+$! --> pid of last command went into background
+
+$@ ---> all arguemnts passed to script stores in array format
+-------------------------------------------------------------
+
+how do you run script in background?
+
+& 
+
+./script.sh &
+
+------------------------------------------------------------------
+
+how do you bring back to foreground?
+
+fg PID
+
+ps -ef | grep "scriptname"
+---------------------------------------------------------------------------
+
+if [ condition ]
+then
+ statement
+fi
+--------------------------------------------------
+if [ condition ]
+then
+statement1
+else
+statement2
+fi
+-----------------------------------------------------------
+
+if [ condition1 ];then
+statement1
+elif [ condition2];then
+statement2
+elif [ condiotn3 ];then
+statement3
+else
+default statement 
+fi 
+-----------------------------------------
+
+write a script to check given number is 5 or not
+
+#!/bin/bash   
+
+if [ $1 -eq 5 ];then
+echo "$1 is five "
+else
+echo "$1 is not equal to five"
+fi
+-----------------------------------------------------------------------
+
+numberic 
+-eq
+-gt
+-ge
+-lt
+-le
+-ne
+
+strings 
+>
+>=
+<=
+==
+!=
+-----------------------------------------------------------------
+
+write a script check number is less than 10 and greater than 5
+#!/bin/bash
+
+num=$1
+if [ $num -gt 5 ] && [ $num -lt 10 ]
+then
+echo "$num is within range"
+else
+echo "$num is out of range"
+fi
+---------------------------------------------------------------
+
+&&  ---AND
+|| ---> OR
+
+---------------------------------------------------------------------------------
+write a script to find biggest of two number and restrict users to pass only two args
+
+#!/bin/bash
+
+if [ $# -ne 2 ];then
+echo "pass two arguments"
+exit 1
+fi
+
+if [ $1 -gt $2 ];then
+echo "$1 is big"
+else
+echo "$2 is big"
+fi
+----------------------------------------------------------------------------------------------------
+
+PATH
+SHELL
+
+environment variabe ---> variables which can be exported to sub shell also
+
+how do you set env variables and how do you export sub shell?
+
+---------------------------------------------------------------------------------------------------------
+
+write a script to find biggest of 3 numbers and restrict users to pass only 3 args. also check given numbers are equal
+
+-------------------------------------------------------------------------------------------------------------
+
+while loop
+
+while [ condition ] ;do
+statement 
+done
+------------------------------------------------------------
+
+-------------------print5---------------------------------------------
+#!/bin/bash
+
+num=$1
+while [ $num -gt 0 ];do
+        echo "$num"
+        num=`expr $num - 1`
+done
+-------------------------------------------------------------------------------------
+
+write a script to find factorial of given number 
+
+-------------------------------------------------------------------------------
+set -x ---> used to debug shell script
+we put this command in the begining of shell script
+-----------------------------------------------------------------------------------------
+
+special characters:
+these characters have special meaning to shell. We need to use escape character (\) to escape speacial meaning to shell.
+* $* $# $? etc
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+how do you read file line by line
+
+while read line
+do
+echo $line
+done < filenam
+--------------------------------------------------------=-
+write a script to count number of chars in each line
+#!/bin/bash
+
+line_num=1
+
+while read line;do
+   char=`echo $line | wc -w`
+   echo "$line_num : $char"
+   line_num=`expr $line_num + 1`
+done < $1
+------------------------------------------------------------------------------------------
+write script to add line numbers to file
+#!/bin/bash
+
+line_num=1
+while read line;do
+        echo "$line_num.$line"
+        line_num=`expr $line_num + 1`
+done < $1
+------------------------------------------------------------------------------------------------------------
+
+write a script to check given name is a file or dir or link or does not exist
+
+echo "enter filename to check "
+read name
+
+if [ -f $name ];then
+        echo "$name is a file"
+elif [ -d $name ];then
+        echo "$name is a dir"
+elif [ -L $name ];then
+        echo "$name is a link"
+else
+        echo "$name does not exist"
+fi
+-------------------------------------------------------------------------------------------------------------------
+
+-f --> file
+-d 
+-L
+-r --> read 
+-w --> write
+-x --> execute 
+
+to check variable is empty or not and also for file
+------------------------------------------------------------------------------------------------------------
+
+write a script to print employee names if thier age is more 50
+
+Name empid age
+ABCD 20004 034
+XYZA 20005 056
+AJAY 20006 032
+VIJI 20007 053
+
+
+------------------------checkage.sh-----------------------------------------------------
+#!/bin/bash
+
+sed '1 d' $1 > temp1
+
+while read line;do
+age=`echo "$line" | awk -F " " '{print $NF}'`
+
+if [ $age -gt 50 ];then
+        echo "$line" | awk -F " " '{print $1}'
+fi
+done < temp1
+rm temp1
+--------------------------------------------------------------------------------------------------------------------------------
+assignment1: list employee names if thier age is between 40 and 50
+
+----------------------------------------------------------------------------------------------------------------------
+
+for i in val1 val2 val3
+do
+statement 
+done
+------------------------------------------------------------------
+write a script to add n numbers
+
+#!/bin/bash
+
+sum=0
+for i in $*
+do
+sum=`expr $sum + $i`
+done
+echo "sum is $sum"
+---------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+num=$1
+fact=1
+
+while [ $num -gt 1 ];do
+    fact=`expr $fact \* $num`
+    num=`expr $num - 1`
+done
+ echo "fact of $1 is $fact"
+
+assigment2: write a script to find factorial for given set of numbers 
+---------------------------------------------------------------------------------------------------------
+
+uptime ---> used to check form how long system is up and running
+
+top --> used to check which process is taking more cpu and memory
+
+-------------------------------------------------------------------------------------------------------------------
+
+assignment3: write a script reverse file, last should be printed as 1st and 2nd last line as 2nd so on...
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+
+
+function fun_name  {
+$1 $2
+
+
+}
+
+
+# main
+
+
+touch test
+fun_name 3 4
+ls 
+bash example.sh
+--------------------------------------------------------------------------------------
+
+-------------------------write a shell script to find factorial for given set of numbers ----------------------
+#!/bin/bash
+
+function fact_num {
+        num=$1
+        fact=1
+while [ $num -gt 0 ];do
+        fact=`expr $fact \* $num`
+        num=`expr $num - 1`
+done
+echo "fact of $1 is $fact"
+}
+
+#main shell scripting
+
+for i in $*
+do
+ fact_num $i
+done
+------------------------------------------------------------------------------------------------------------
+
+write a script to find biggest of n numbers 
+
+#!/bin/bash
+big=$1
+for i in $*
+do
+if [ $big -lt $i ];then
+        big=$i
+fi
+done
+echo "biggest of $* is $big"
+-----------------------------------------------------------------------------------------------
+
+Assignment1: write a script to find smallest niumber 
+assignment2: write a script to find 2nd smallest number
+assignment3: write a script to find 2nd biggest number 
+----------------------------------------------------------------------------------------------------
+
+what kind of script you have written?
+
+I have written a script to send email notification automatically if disk size on the server is more than 90%.
+so that we can take appropriate action(delete unwanted data on server or we can increase memory)
+
+------------------------------------------------------------------------
+#!/bin/bash
+
+size=`df -h . | awk -F " " '{print $(NF-1)}' | tail -1|sed 's/%//g'`
+
+if [ $size -gt 90 ];then
+echo -e "Hi\nMemory reached 90% on the server\n Thanks\ndevops team" | mail -s "memory reached 90%" xyz@gmail.com
+fi
+
+-----------------------------------------------------------
+
+mail command 
+mail is used to send email from linux server (we can use another mailx)
+
+echo -e "Hi\nthis is email for memory" | mail -s "subject" -c "abc@gmail.com" xyz@gmail.com,email@gmail.com
+
+
+mail -s "subject" -c "abc@gmail.com" xyz@gmail.com,email@gmail.com < file
+
+------------------------------------------------------------------------------------------------------------------------
+crontab ---> scheduler which is used to scripts in background 
+
+crontab -e
+crontab -l 
+------------------------------------------------------------------------
+scheduled script to run at 9.15PM on wednesday
+
+15 21 23 06 03 /home/test.sh
+
+-------------------------------------------------------------------------
+
+need to run script at 11am every monday
+
+00 11 * * 01 /home/test.sh
+--------------------------------------------------------------------------
+
+need to run script at 11am every monday and thursday
+
+00 11 * * 01,04 /home/test.sh
+--------------------------------------------------------------------
+need to run script at 11am every monday to Friday
+
+00 11 * * 01-05 /home/test.sh
+--------------------------------------------------------------------------------
+
+run script every 30mins on tuesday
+
+*/30 * * * 02 /home/test.sh
+----------------------------------------------------
+run script every 5mins every day
+
+*/5 * * * * /home/test.sh
+
+--------------------------------------------------------
+need to run script every day every hour 
+
+00 * * * * /home/test.sh
+
+-------------------------------------------------------------------
+run script every min and every day
+
+* * * * * /home/test
+---------------------------------------------------------------------------
+
+run script on 1st of every month at 11.30AM
+
+30 11 01 * * /home/test.sh
+---------------------------------------------------------
+
+how do you check opened files
+lsof
+--------------------------------------------------------------------------
+
+Interview script
+
+I have written a script to check tomcat process is stopped or not. We have 15 to 20 tomcat services running on server, 
+if any of these services stopped or someone stopped by accidently, We should get email notification saying taht this particular service stopped.
+
+--------------------------------checkprocess.sh----------------------------------------------
+#!/bin/bash
+
+service="service1 service2......"
+ps -aux > service_log
+for i in $service
+do
+grep "$i" service_log
+
+if [ $? -ne 0 ];then
+echo "$i" >> stopped_service
+fi
+
+done
+
+if [ -s stopped_service ];then
+cat stopped_service | mail -s "stopped tomcat services list"  abc@gmail.com
+fi
+rm stopped_service service_log
+
+----------------------------------------------------------------------------------------------------------------
+how do you schedule this script in crontab
+
+* * * * * /home/ec2-user/scripts/checkprocess.sh
+---------------------------------------------------------------------------------------------
+
+ case statement 
+
+case $var in 
+
+val1) statement1
+ ;;
+val2) statement2
+;;
+val3) statement3
+;;
+* ) statement4
+;;
+esac
+-------------------------------------------------------------
+#!/bin/bash
+
+case $1 in
+        1) echo "this is one"
+                ;;
+        2)echo "this is two"
+                ;;
+        3)echo "this is three"
+                ;;
+        4)echo "this is four"
+                ;;
+        *)echo "this is invalid"
+                ;;
+esac
+
+or
+
+#!/bin/bash
+
+case $1 in
+        1|5|7) echo "this is one"
+                ;;
+        2|6)echo "this is two"
+                ;;
+        3)echo "this is three"
+                ;;
+        "four"|"eight")echo "this is four"
+                ;;
+        *)echo "this is invalid"
+                ;;
+esac
+
+---------------------------------------------------------------------------
+
+write a script to do below tasks
+
+if day is monday, create temp_monday_1 and content today is monday
+
+if day is tuesday, rename that file to temp_tuesday_1
+
+if day is wednesday, copy temp_tuesday_1 to temp_wednesday_1
+if day is thursday, delete temp_tuesday_1 and rename temp_wednesday_1 to temp_friday_1
+if day is friday. display content of temp_friday_1 and overwrite content to today is monday
+
+if sat and sun, display message, today is holiday.
+
+-------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+#day=`date +%a`
+day=$1
+
+case $day in 
+      "mon"|"monday") echo "today is monday" > temp_monday_1
+                      ;;
+      "tue"|"tuesday") mv temp_monday_1 temp_tuesday_1
+                       ;;
+      "wed"|"wednesday") cp temp_tuesday_1 temp_wednesday_1
+                       ;;
+       "thu"|"thursday") rm temp_tuesday_1; mv temp_friday_1 temp_wednesday_1
+                       ;;
+       "fri"|"friday") cat temp_friday_1
+                        echo "today is friday" > temp_friday_1
+                       ;;
+        *) echo "today is holiday"
+                       ;;
+esac
+------------------------------------------------------------------------------------------------------------------------
+
+write menu based script for followings
+
+-----------------menu.sh---------------------------
+
+1) searchword  
+2) checkname 
+3) find file
+4) create link
+5) edit file
+6) exit
+
+------------------------------------------------------------------------------
+
+#!/bin/bash
+
+echo "below is the menu"
+echo -e "1)searchword\n2)checkname\n3)find file\n4)create link\n5)edit file\n6)exit\n"
+echo "enter option you want from above menu"
+read opt
+
+case $opt in 
+
+          1) echo "enter word to search"
+             read word
+             grep -l "$word" * > list
+             if [ $? -eq 0 ];then
+             echo "$word is found in below files"
+             cat list
+             else
+             echo "$word is not found"
+             fi
+             rm list
+             ;;
+           2) sh /home/ec2-user/scripts/checkname.sh   # execute one script inside another  
+               ;;
+
+            3) echo "enter file name to its locations"
+                 read file
+                 find . -iname "$file" > location
+                 if [ $? -eq 0 ];then
+                 echo "$file is found below locations"
+                  cat location
+                   else
+                 echo "$file is not found in anywhere in the system"
+                 fi
+                 rm location
+                 ;;
+
+              4) echo "enter file "
+                 read file
+                 if [ !-f $file ];then
+                   echo "$file does not exist"
+                    exit
+                 fi
+
+                 echo "enter link name"
+                 read link
+                 if [ -L $link ];then
+                  echo "$link already exists"
+                  exit 
+                  fi
+
+                ln -s $file $link
+                   ;;
+             5) echo "enter file name"
+                 read file 
+                  vim $file
+                 ;;
+              * ) exit
+                    ;;
+
+esac
+--------------------------------------------------------------------------------------------------------------------------------
+
+./menu.sh
+
+it should be display menu again if i enter option from 1 to 5 and it should not exit from the script until I press exit button explicitly
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+hotel.sh
+
+1) idly  ---> 1 normal and rava idly
+2) dosa   ----->  masala, onion and set dosa
+3) pallav  ------->
+4) poori  ------> 
+5) coffe/tea --->
+6) exit
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
